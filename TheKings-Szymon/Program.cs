@@ -34,6 +34,8 @@ namespace TheKings_Szymon
             string mostCommonFirstName = FindMostCommonFirstName(monarchs);
             Console.WriteLine("\nWhat was the most common first name?");
             Console.WriteLine($"The most common first name is {mostCommonFirstName}.");
+
+            Console.ReadLine(); // Prevent the console from closing
         }
 
         public static int CountOfMonarhOnTheList(List<Monarch> monarchs)
