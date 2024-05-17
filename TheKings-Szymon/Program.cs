@@ -23,13 +23,17 @@ namespace TheKings_Szymon
                 Console.WriteLine($"Error: {ex.Message}");
             }
 
-            Console.WriteLine("How many monarchs are there in the list?");
+            Console.WriteLine("\nHow many monarchs are there in the list?");
             Console.WriteLine($"There are {CountOfMonarhOnTheList(monarchs)} monarchs in the list.");
-            Console.WriteLine(" Which monarch ruled the longest (and for how long)?");
+            Console.WriteLine("\nWhich monarch ruled the longest (and for how long)?");
             var longestReigningMonarch = FindLongestReigningMonarch(monarchs);
-            Console.WriteLine($"\nThe longest reigning monarch is {longestReigningMonarch.Name} who ruled for {longestReigningMonarch.Duration} years.");
+            Console.WriteLine($"The longest reigning monarch is {longestReigningMonarch.Name} who ruled for {longestReigningMonarch.Duration} years.");
             var houseWithLongestReign = FindHouseWithLongestReign(monarchs);
-            Console.WriteLine($"\nThe house that ruled the longest is {houseWithLongestReign.House} with a total of {houseWithLongestReign.TotalReigningDuration} years.");
+            Console.WriteLine("\nWhich house ruled the longest (and for how long)?");
+            Console.WriteLine($"The house that ruled the longest is {houseWithLongestReign.House} with a total of {houseWithLongestReign.TotalReigningDuration} years.");
+            string mostCommonFirstName = FindMostCommonFirstName(monarchs);
+            Console.WriteLine("\nWhat was the most common first name?");
+            Console.WriteLine($"The most common first name is {mostCommonFirstName}.");
         }
 
         public static int CountOfMonarhOnTheList(List<Monarch> monarchs)
@@ -84,6 +88,21 @@ namespace TheKings_Szymon
             return houseDurations != null
                 ? (houseDurations.House, houseDurations.TotalReigningDuration)
                 : (null, 0);
+        }
+
+        public static string FindMostCommonFirstName(List<Monarch> monarchs)
+        {
+            var firstNameFrequency = monarchs
+                .GroupBy(m => m.Name.Split(' ')[0])
+                .Select(group => new
+                {
+                    FirstName = group.Key,
+                    Frequency = group.Count()
+                })
+                .OrderByDescending(f => f.Frequency)
+                .FirstOrDefault();
+
+            return firstNameFrequency != null ? firstNameFrequency.FirstName : null;
         }
     }
 }
