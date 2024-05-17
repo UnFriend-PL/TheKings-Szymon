@@ -28,6 +28,8 @@ namespace TheKings_Szymon
             Console.WriteLine(" Which monarch ruled the longest (and for how long)?");
             var longestReigningMonarch = FindLongestReigningMonarch(monarchs);
             Console.WriteLine($"\nThe longest reigning monarch is {longestReigningMonarch.Name} who ruled for {longestReigningMonarch.Duration} years.");
+            var houseWithLongestReign = FindHouseWithLongestReign(monarchs);
+            Console.WriteLine($"\nThe house that ruled the longest is {houseWithLongestReign.House} with a total of {houseWithLongestReign.TotalReigningDuration} years.");
         }
 
         public static int CountOfMonarhOnTheList(List<Monarch> monarchs)
@@ -65,6 +67,23 @@ namespace TheKings_Szymon
             }
 
             return longestReigningMonarch;
+        }
+
+        public static (string House, int TotalReigningDuration) FindHouseWithLongestReign(List<Monarch> monarchs)
+        {
+            var houseDurations = monarchs
+                .GroupBy(m => m.House)
+                .Select(group => new
+                {
+                    House = group.Key,
+                    TotalReigningDuration = group.Sum(m => m.GetReignDuration())
+                })
+                .OrderByDescending(h => h.TotalReigningDuration)
+                .FirstOrDefault();
+
+            return houseDurations != null
+                ? (houseDurations.House, houseDurations.TotalReigningDuration)
+                : (null, 0);
         }
     }
 }
