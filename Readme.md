@@ -16,10 +16,6 @@ TheKings_Szymon is a C# console application that fetches and processes data abou
 
 To get a local copy up and running, follow these simple steps.
 
-### Prerequisites
-
-- .NET Core 3.1 or later
-
 ### Installation
 
 1. Clone the repo
